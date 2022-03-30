@@ -1,5 +1,5 @@
 import os
-
+from random import randint, shuffle
 print("Welcome to the Y11 Factorisng Quadratics Quiz 2022!\n")
 print("Program written and quiz composed by Ron Geilik")
 print("---------------------------------------------\n")
@@ -13,18 +13,29 @@ answers_2 = ['Answer1Alt', 'Answer1Alt', 'Answer3Alt', 'Answer4Alt', 'Answer5Alt
 score = 0
 def main():
   for question in questions:
-    
-    print("Simplify {}".format(question))
-    answer = input("Answer>> ")
     index = int(questions.index(question))
+    possible_answers = ["(x+{})(x+{})".format(str(randint(1, 10)), str(randint(1, 10))), "(x+{})(x+{})".format(str(randint(1, 10)), str(randint(1, 10))), "(x+{})(x+{})".format(str(randint(1, 10)), str(randint(1, 10))), os.environ[answers_1[index]]]
+    shuffle(possible_answers)
+    option_1 = "a) {}".format(possible_answers[0])
+    option_2 = "b) {}".format(possible_answers[1])
+    option_3 = "c) {}".format(possible_answers[2])
+    option_4 = "d) {}".format(possible_answers[3])
+    print("Options:\n {}\n {}\n {}\n {}\n".format(option_1, option_2, option_3, option_4))
+    
+    answer = input("Answer>> ")
+    
+    correct_answer_1 = str(os.environ[answers_1[index]])
+    correct_answer_2 = str(os.environ[answers_2[index]])
+    print(correct_answer_1)
+    print(type(correct_answer_1))
     
 
-    if (answer == os.environ[answers_1[index]] or os.environ[answers_2[index]]): #<----- Remember to add alt answer as well.
+    if (answer == correct_answer_1 or answer == correct_answer_2): 
 
       print ("Correct!")
 
     else:
-      print("Sorry, you didn't get that one. The correct answer was {}".format(os.environ[answers_1[index]]))
+      print("Sorry, you didn't get that one. The correct answer was {} and {}".format(os.environ[answers_1[index]], os.environ[answers_2]))
 
     
   
