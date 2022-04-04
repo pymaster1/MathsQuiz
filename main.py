@@ -10,6 +10,7 @@ questions = ["x^2 + 3x + 2", "x^2 + 8x +15", "x^2 - 8x - 20", "x^2 + 7x - 18", "
 answers_1 = ['Answer1', 'Answer2', 'Answer3', 'Answer4', 'Answer5', 'Answer6', 'Answer7', 'Answer8', 'Answer9', 'Answer10']
 answers_2 = ['Answer1Alt', 'Answer1Alt', 'Answer3Alt', 'Answer4Alt', 'Answer5Alt', 'Answer6Alt', 'Answer7Alt', 'Answer8Alt', 'Answer9Alt', 'Answer10Alt']
 
+running = 10
 score = 0
 def main():
   for question in questions:
@@ -20,29 +21,43 @@ def main():
     option_2 = "b) {}".format(possible_answers[1])
     option_3 = "c) {}".format(possible_answers[2])
     option_4 = "d) {}".format(possible_answers[3])
-    print("Options:\n {}\n {}\n {}\n {}\n".format(option_1, option_2, option_3, option_4))
+    print("Question: {}\n".format(str(question)))
+    print("Options: (Please input the answer exactly as it is on the options\n e.g instead of 'a', input (x+__)(x+__))\n {}\n {}\n {}\n {}\n".format(option_1, option_2, option_3, option_4))
     
     answer = input("Answer>> ")
     
     correct_answer_1 = str(os.environ[answers_1[index]])
     correct_answer_2 = str(os.environ[answers_2[index]])
     print(correct_answer_1)
-    print(type(correct_answer_1))
     
+    try:
 
-    if (answer == correct_answer_1 or answer == correct_answer_2): 
+      if (answer.casefold() == correct_answer_1 or answer.casefold() == correct_answer_2): 
 
-      print ("Correct!")
+        print ("Correct!\n")
+        global score
+        score += 1
+        global running
+        running -= 1
 
-    else:
-      print("Sorry, you didn't get that one. The correct answer was {} and {}".format(os.environ[answers_1[index]], os.environ[answers_2]))
+      else:
+        print("Sorry, you didn't get that one. The correct answer was {} and       {}".format(os.environ[answers_1[index]], os.environ[answers_2]))
 
-    
-  
-main()
-
-  
-  
-  
-  
+    except TypeError:
+      print("\nSorry, you didn't get that one. The correct answer was {}\n".format(os.environ[answers_1[index]]))
+      
+      
+      if running == 0:
+        print("Thank you for completing the quiz. Your score was {}/10".format(str(score)))
+      else:
         
+        running -= 1
+        pass
+  
+
+
+while running > 1:
+  main()
+  
+if (running == 0):
+  print("Thank you for completing this quiz. Your score was {}/10".format(str(score)))
